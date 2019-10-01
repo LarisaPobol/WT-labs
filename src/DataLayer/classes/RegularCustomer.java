@@ -1,4 +1,4 @@
-package DataLayer.classes;
+package DataLayer.Classes;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,6 +8,10 @@ public class RegularCustomer extends Customer implements Serializable {
 
     public RegularCustomer(String name, String surname, String phoneNumber, String email) {
         super(name, surname, phoneNumber, email);
+    }
+
+    public RegularCustomer() {
+
     }
 
     public BonusCard getBonusCard() {
@@ -30,5 +34,10 @@ public class RegularCustomer extends Customer implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getBonusCard());
+    }
+
+    @Override
+    public ObjectCreator Create() {
+        return new RegularCustomer();
     }
 }

@@ -1,10 +1,9 @@
-package DataLayer.classes;
-
+package DataLayer.Classes;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Catalog implements Serializable {
+public class Catalog extends ObjectCreator  implements Serializable {
     private String Name;
     private Catalog parentCatalog;
     private List<Catalog> subCatalogues;
@@ -12,6 +11,10 @@ public class Catalog implements Serializable {
 
     public Catalog(String name) {
         Name = name;
+    }
+
+    public Catalog() {
+
     }
 
     public String getName() {
@@ -60,5 +63,10 @@ public class Catalog implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getParentCatalog(), getSubCatalogues(), getCatalogItems());
+    }
+
+    @Override
+    public ObjectCreator Create() {
+        return new Catalog();
     }
 }

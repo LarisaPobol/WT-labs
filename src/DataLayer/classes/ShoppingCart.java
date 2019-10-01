@@ -1,10 +1,10 @@
-package DataLayer.classes;
+package DataLayer.Classes;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class ShoppingCart  implements Serializable {
+public class ShoppingCart extends ObjectCreator implements Serializable {
     private int Id;
     private int clientId;
     private List<Item> itemsInShoppingCart;
@@ -12,6 +12,10 @@ public class ShoppingCart  implements Serializable {
     public ShoppingCart(int id, int clientId) {
         Id = id;
         this.clientId = clientId;
+    }
+
+    public ShoppingCart() {
+
     }
 
     public int getId() {
@@ -51,5 +55,10 @@ public class ShoppingCart  implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getClientId(), getItemsInShoppingCart());
+    }
+
+    @Override
+    public ObjectCreator Create() {
+        return new ShoppingCart();
     }
 }

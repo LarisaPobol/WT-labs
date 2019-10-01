@@ -1,13 +1,19 @@
-package DataLayer.classes;
-
+package DataLayer.Classes;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class BonusCard  implements Serializable {
+public class BonusCard extends ObjectCreator implements Serializable  {
     private String bonusCardNumber;
     private int clientId;
     private float personalDiscount;
 
+    public BonusCard() {
+
+    }
+
+    public ObjectCreator Create() {
+        return new BonusCard();
+    }
     public BonusCard(int clientId) {
         this.clientId = clientId;
     }

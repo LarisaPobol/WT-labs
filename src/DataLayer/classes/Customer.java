@@ -1,9 +1,9 @@
-package DataLayer.classes;
+package DataLayer.Classes;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Customer implements Serializable {
+public class Customer extends ObjectCreator implements Serializable {
     private String name;
     private String surname;
     private String phoneNumber;
@@ -15,6 +15,10 @@ public class Customer implements Serializable {
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+
+    public Customer() {
+
     }
 
     public String getName() {
@@ -73,4 +77,10 @@ public class Customer implements Serializable {
     public int hashCode() {
         return Objects.hash(getName(), getSurname(), getPhoneNumber(), getEmail(), getShoppingCart());
     }
+
+    @Override
+    public ObjectCreator Create() {
+        return new Customer();
+    }
 }
+
