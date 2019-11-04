@@ -1,13 +1,19 @@
-package DataLayer.Classes;
+package Beans;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Customer extends ObjectCreator implements Serializable {
+public class Customer extends ObjectCreator implements Serializable{
     private String name;
     private String surname;
     private String phoneNumber;
     private String email;
+
+    @Override
+    public String toString() {
+        return  name + ' '  + surname + '\'';
+    }
+
     private ShoppingCart shoppingCart;
 
     public Customer(String name, String surname, String phoneNumber, String email) {
@@ -20,7 +26,6 @@ public class Customer extends ObjectCreator implements Serializable {
     public Customer() {
 
     }
-
     public String getName() {
         return name;
     }
@@ -76,11 +81,6 @@ public class Customer extends ObjectCreator implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getSurname(), getPhoneNumber(), getEmail(), getShoppingCart());
-    }
-
-    @Override
-    public ObjectCreator Create() {
-        return new Customer();
     }
 }
 

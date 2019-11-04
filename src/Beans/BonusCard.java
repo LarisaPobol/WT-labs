@@ -1,28 +1,32 @@
-package DataLayer.Classes;
+package Beans;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class BonusCard extends ObjectCreator implements Serializable  {
     private String bonusCardNumber;
-    private int clientId;
-    private float personalDiscount;
+    private Integer clientId;
+    private Float personalDiscount;
 
     public BonusCard() {
-
     }
 
     public ObjectCreator Create() {
         return new BonusCard();
     }
-    public BonusCard(int clientId) {
+    public BonusCard(Integer clientId) {
         this.clientId = clientId;
     }
 
-    public int getClientId() {
+    @Override
+    public String toString() {
+        return bonusCardNumber + '\'';
+    }
+
+    public Integer getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(Integer clientId) {
         this.clientId = clientId;
     }
 
@@ -34,11 +38,11 @@ public class BonusCard extends ObjectCreator implements Serializable  {
         this.bonusCardNumber = bonusCardNumber;
     }
 
-    public float getPersonalDiscount() {
+    public Float getPersonalDiscount() {
         return personalDiscount;
     }
 
-    public void setPersonalDiscount(float personalDiscount) {
+    public void setPersonalDiscount(Float personalDiscount) {
         this.personalDiscount = personalDiscount;
     }
 

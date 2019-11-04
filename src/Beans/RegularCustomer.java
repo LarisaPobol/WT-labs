@@ -1,4 +1,4 @@
-package DataLayer.Classes;
+package Beans;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,7 +11,12 @@ public class RegularCustomer extends Customer implements Serializable {
     }
 
     public RegularCustomer() {
+        super();
+    }
 
+    @Override
+    public String toString() {
+        return super.getName() + ' ' + super.getSurname() + ' ' + bonusCard.toString() + '\'';
     }
 
     public BonusCard getBonusCard() {
@@ -36,8 +41,4 @@ public class RegularCustomer extends Customer implements Serializable {
         return Objects.hash(super.hashCode(), getBonusCard());
     }
 
-    @Override
-    public ObjectCreator Create() {
-        return new RegularCustomer();
-    }
 }

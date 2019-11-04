@@ -1,48 +1,41 @@
-package DataLayer.Classes;
+package Beans;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Item  extends ObjectCreator implements Serializable {
-    private int id;
-    private float price;
-    private int amount;
+    private Integer id;
+    private Float price;
+    private Integer amount;
     private  String name;
     private Catalog catalog;
 
-    public Item(int id, float price, int amount, String name, Catalog catalog) {
-        this.id = id;
-        this.price = price;
-        this.amount = amount;
-        this.name = name;
-        this.catalog = catalog;
-    }
 
     public Item() {
 
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -52,6 +45,11 @@ public class Item  extends ObjectCreator implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return  name + '\'';
     }
 
     public Catalog getCatalog() {
@@ -79,8 +77,5 @@ public class Item  extends ObjectCreator implements Serializable {
         return Objects.hash(getId(), getPrice(), getAmount(), getName(), getCatalog());
     }
 
-    @Override
-    public ObjectCreator Create() {
-        return new Item();
-    }
+
 }

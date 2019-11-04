@@ -1,20 +1,19 @@
-package DataLayer.Classes;
+package Beans;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Catalog extends ObjectCreator  implements Serializable {
     private String Name;
     private Catalog parentCatalog;
-    private List<Catalog> subCatalogues;
-    private List<Item> catalogItems;
+
 
     public Catalog(String name) {
         Name = name;
     }
 
     public Catalog() {
-
     }
 
     public String getName() {
@@ -33,20 +32,10 @@ public class Catalog extends ObjectCreator  implements Serializable {
         this.parentCatalog = parentCatalog;
     }
 
-    public List<Catalog> getSubCatalogues() {
-        return subCatalogues;
-    }
 
-    public void setSubCatalogues(List<Catalog> subCatalogues) {
-        this.subCatalogues = subCatalogues;
-    }
-
-    public List<Item> getCatalogItems() {
-        return catalogItems;
-    }
-
-    public void setCatalogItems(List<Item> catalogItems) {
-        this.catalogItems = catalogItems;
+    @Override
+    public String toString() {
+        return  Name + '\'';
     }
 
     @Override
@@ -55,18 +44,12 @@ public class Catalog extends ObjectCreator  implements Serializable {
         if (!(o instanceof Catalog)) return false;
         Catalog catalog = (Catalog) o;
         return Objects.equals(getName(), catalog.getName()) &&
-                Objects.equals(getParentCatalog(), catalog.getParentCatalog()) &&
-                Objects.equals(getSubCatalogues(), catalog.getSubCatalogues()) &&
-                Objects.equals(getCatalogItems(), catalog.getCatalogItems());
+                Objects.equals(getParentCatalog(), catalog.getParentCatalog());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getParentCatalog(), getSubCatalogues(), getCatalogItems());
+        return Objects.hash(getName(), getParentCatalog());
     }
 
-    @Override
-    public ObjectCreator Create() {
-        return new Catalog();
-    }
 }
