@@ -35,7 +35,7 @@ public class Catalog extends ObjectCreator  implements Serializable {
 
     @Override
     public String toString() {
-        return  Name + '\'';
+        return  Name;
     }
 
     @Override

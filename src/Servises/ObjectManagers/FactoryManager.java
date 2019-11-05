@@ -4,6 +4,9 @@ import Servises.Factory.*;
 
 import java.util.ArrayList;
 
+/**
+ * ObjectCreator factory
+ */
 public class FactoryManager  implements IFactoryManager{
     private ArrayList<ObjectCreatorFab> factoryArray;
     public  FactoryManager() {

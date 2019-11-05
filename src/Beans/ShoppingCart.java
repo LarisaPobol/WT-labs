@@ -15,7 +15,7 @@ public class ShoppingCart extends ObjectCreator implements Serializable {
 
     @Override
     public String toString() {
-        return Id.toString() + '\'';
+        return Id.toString();
     }
 
     public Integer getId() {

@@ -4,11 +4,11 @@ import Beans.*;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
+/**
+ * class that manages objects
+ */
 public class ObjectManager implements IObjectManager, Serializable {
     private ArrayList<ArrayList<ObjectCreator>> listObjects;
 
@@ -29,8 +29,39 @@ public class ObjectManager implements IObjectManager, Serializable {
     }
 
     @Override
-    public void deleteElement(int listIndex, int index) {
-        listObjects.get(listIndex).remove(index);
+    public void deleteElement(int listIndex, int index) throws IllegalAccessException {
+        ObjectCreator objForDel = listObjects.get(listIndex).get(index);
+        for (ArrayList<ObjectCreator> list : listObjects
+        ) {
+            Iterator<ObjectCreator> it = list.iterator();
+            while (it.hasNext()) {
+                ObjectCreator objectInList = it.next();
+               // delete(objectInList, objForDel, it);
+                delete(objForDel, objectInList, it);
+            }
+        }
+        listObjects.get(listIndex).remove(objForDel);
+    }
+
+    private void delete(ObjectCreator objectInList, ObjectCreator objForDel, Iterator it) throws IllegalAccessException {
+        Field[] objForDelFields = objForDel.getClass().getDeclaredFields();
+        Class class1 = objectInList.getClass();
+        int fieldIndex = -1;
+        int i = 0;
+        boolean containField = false;
+        while ((i < objForDelFields.length) && (!containField)) {
+            if (objForDelFields[i].getType() == class1) {
+                fieldIndex = i;
+                containField = true;
+            }
+            i++;
+        }
+        if (fieldIndex != -1) {
+            objForDelFields[fieldIndex].setAccessible(true);
+            if (objForDelFields[fieldIndex].get(objForDel) == objectInList) {
+                it.remove();
+            }
+        }
     }
 
     @Override
@@ -54,6 +85,16 @@ public class ObjectManager implements IObjectManager, Serializable {
     }
 
     @Override
+    public int getListIndexByObject(ObjectCreator obj) {
+        for (ArrayList<ObjectCreator> list:listObjects
+             ) {
+            if (list.indexOf(obj) != -1) {
+                return listObjects.indexOf(list);
+            }
+        }
+        return -1;
+    }
+    @Override
     public ArrayList<ObjectCreator> getSortedList(int listIndex, Comparator<ObjectCreator> comparator) {
         ArrayList<ObjectCreator> sortedList = listObjects.get(listIndex);
         Collections.sort(sortedList, comparator);
@@ -61,53 +102,11 @@ public class ObjectManager implements IObjectManager, Serializable {
     }
 
     @Override
-    public ObjectCreator search(int listIndex, ObjectCreator obj) throws IllegalAccessException {
-        ArrayList<Class> classArray = new ArrayList<Class>(
-                Arrays.asList(BonusCard.class, Catalog.class, Customer.class, Item.class, RegularCustomer.class, ShoppingCart.class)
-        );
-        ArrayList<ObjectCreator> listForSearch = new ArrayList<ObjectCreator>(listObjects.get(listIndex));
-        Class objClass = obj.getClass();
-        Field[] objFields = objClass.getDeclaredFields();
-        for (Field field : objFields
-        ) {
-            field.setAccessible(true);
-
-            if (field.get(obj) != null && field.get(obj) != " ") {
-                int i = 0;
-                for (i = 0; i < listForSearch.size(); i++) {
-                    if (field.get(obj) != field.get(listForSearch.get(i))) {
-                        listForSearch.remove(listForSearch.get(i));
-
-                    }
-                }
-            }
-       /* for (Field field : objFields
-        ) {
-            field.setAccessible(true);
-            if (field.get(obj) != null) {
-                for (ObjectCreator objInList : listForSearch
-                ) {
-                    if (field.get(obj) != field.get(objInList)) {
-                        listForSearch.remove(objInList);
-                    }
-                }
-            }*/
-/*    ArrayList<Class> classArray = new ArrayList<Class>(
-            Arrays.asList(BonusCard.class, Catalog.class, Customer.class, Item.class, RegularCustomer.class, ShoppingCart.class)
-    );
-        ArrayList<ObjectCreator> listForSearch = listObjects.get(listIndex);
-    for (ObjectCreator b : listForSearch) {
-        ObjectCreator d = (ObjectCreator) classArray.get(listIndex).cast(b);
-        if (d.equals(b)) return listForSearch.indexOf(b);
-    }
-    return -1;*/
+    public int search(int listIndex, String strToFind) throws IllegalAccessException {
+        for (ObjectCreator b :listObjects.get(listIndex)) {
+            if (b.toString().equals(strToFind)) return listObjects.get(listIndex).indexOf(b);
         }
-        if (listForSearch.size() != 0) {
-            return listForSearch.get(0);
-        } else {
-            return null;
-        }
-        //return listForSearch;
+        return -1;
     }
 }
 

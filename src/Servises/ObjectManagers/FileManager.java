@@ -8,6 +8,9 @@ import Servises.ServiseException;
 
 import java.util.ArrayList;
 
+/**
+ * class that uses serializer to deal with files
+ */
 public class FileManager  implements  IFileManager{
     private Serializer serializer;
     public FileManager() {

@@ -49,7 +49,7 @@ public class Item  extends ObjectCreator implements Serializable {
 
     @Override
     public String toString() {
-        return  name + '\'';
+        return  name;
     }
 
     public Catalog getCatalog() {

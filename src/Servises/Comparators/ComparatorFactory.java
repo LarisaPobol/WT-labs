@@ -16,6 +16,9 @@ import Servises.Comparators.ShoppingCartComparators.ShoppingCartIdComparator;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * Comparator factory
+ */
 public class ComparatorFactory {
     private ArrayList<ArrayList<Comparator>> comparatorArray;
 
@@ -33,7 +36,6 @@ public class ComparatorFactory {
         itemComparators.add(new ItemPriceComparator());
 
         ArrayList<Comparator> bonusCardComparators = new ArrayList<>();
-        bonusCardComparators.add(new BonusCardClientIdComparator());
         bonusCardComparators.add(new BonusCardNumberComparator());
         bonusCardComparators.add(new BonusCardPersonalDiscountComparator());
 

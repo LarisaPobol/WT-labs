@@ -8,11 +8,12 @@ import java.util.Comparator;
 public interface IObjectManager {
     void addElement(ObjectCreator obj, int listIndex) ;
     ArrayList<ObjectCreator> addList() ;
-    void deleteElement(int listIndex, int index );
+    void deleteElement(int listIndex, int index ) throws IllegalAccessException;
     ArrayList<ArrayList<ObjectCreator>> getAll();
     ArrayList<ObjectCreator> getListByIndex(int listIndex);
-    public  ObjectCreator search(int listIndex, ObjectCreator obj) throws IllegalAccessException;
+    public  int search(int listIndex, String strToFind) throws IllegalAccessException;
     ObjectCreator getObjectByIndex(int listIndex, int objIndex);
     void set(ArrayList<ArrayList<ObjectCreator>> newList);
+    int getListIndexByObject(ObjectCreator obj);
     ArrayList<ObjectCreator> getSortedList(int listIndex, Comparator<ObjectCreator> comparator);
 }

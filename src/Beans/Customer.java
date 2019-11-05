@@ -11,7 +11,7 @@ public class Customer extends ObjectCreator implements Serializable{
 
     @Override
     public String toString() {
-        return  name + ' '  + surname + '\'';
+        return  name + ' '  + surname ;
     }
 
     private ShoppingCart shoppingCart;

@@ -16,7 +16,7 @@ public class RegularCustomer extends Customer implements Serializable {
 
     @Override
     public String toString() {
-        return super.getName() + ' ' + super.getSurname() + ' ' + bonusCard.toString() + '\'';
+        return super.getName() + ' ' + super.getSurname();
     }
 
     public BonusCard getBonusCard() {
