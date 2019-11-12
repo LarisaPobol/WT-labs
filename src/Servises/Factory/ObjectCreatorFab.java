@@ -1,12 +1,12 @@
-package Servises.Factory;
+package servises.factory;
 
-import Beans.ObjectCreator;
+import beans.ObjectCreator;
 
 /**
- * Object factory
+ * factory for ObjectCreator(base type of objects)
  */
 public abstract class ObjectCreatorFab {
-    public abstract ObjectCreator Create();
+    public abstract ObjectCreator create();
 
     @Override
     public String toString() {

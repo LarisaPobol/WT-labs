@@ -1,12 +1,12 @@
-package Servises.ObjectManagers;
+package servises.objectManagers;
 
-import Beans.ObjectCreator;
-import DataLayer.SourceManagers.DataLayerException;
-import DataLayer.SourceManagers.ISerializer;
-import DataLayer.SourceManagers.Serializer;
-import Servises.ServiseException;
+import beans.ObjectCreator;
+import dataLayer.sourceManagers.DataLayerException;
+import dataLayer.sourceManagers.Serializer;
+import servises.ServiseException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * class that uses serializer to deal with files
@@ -18,9 +18,9 @@ public class FileManager  implements  IFileManager{
     }
 
     @Override
-    public void saveToFile(ArrayList<ArrayList<ObjectCreator>> listToSave, String fileName) throws ServiseException {
+    public void saveToFile(List listToSave, String fileName) throws ServiseException {
         try {
-            serializer.Serialize(listToSave, fileName);
+            serializer.serialize(listToSave, fileName);
         }
         catch (DataLayerException ex) {
             throw new ServiseException(ex);
@@ -28,9 +28,9 @@ public class FileManager  implements  IFileManager{
     }
 
     @Override
-    public ArrayList<ArrayList<ObjectCreator>> readFromFile(String fileName) throws ServiseException {
+    public List readFromFile(String fileName) throws ServiseException {
         try {
-            return serializer.Deserialize(fileName);
+            return serializer.deserialize(fileName);
         }
         catch (DataLayerException ex) {
             throw new ServiseException(ex);

@@ -1,16 +1,20 @@
-package Controllers;
+package controllers;
 
-import Beans.ObjectCreator;
-import Servises.Comparators.ComparatorFactory;
-import Servises.Factory.*;
-import Servises.ObjectManagers.FactoryManager;
-import Servises.ObjectManagers.FileManager;
-import Servises.ObjectManagers.ObjectManager;
-import Servises.ServiseException;
+import beans.ObjectCreator;
+import servises.comparators.ComparatorFactory;
+import servises.factory.*;
+import servises.objectManagers.FactoryManager;
+import servises.objectManagers.FileManager;
+import servises.objectManagers.ObjectManager;
+import servises.ServiseException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
+/**
+ * main controller, deals with object's and comparator's factories and input/output conrollers
+ */
 public class Controller implements IController {
     private ObjectManager objectManager;
     private FileManager fileManager;
@@ -31,34 +35,34 @@ public class Controller implements IController {
      * @return arrayList with entered index
      */
     @Override
-    public ArrayList<ObjectCreator> getCurrObjectsListByIndex(int listIndex) {
+    public List getCurrObjectsListByIndex(int listIndex) {
         return objectManager.getListByIndex(listIndex);
     }
 
     /**
-     * return arrayList that contains all objects lists
-     * @return
+     * return List that contains all objects lists
+     * @return list of objects
      */
     @Override
-    public ArrayList<ArrayList<ObjectCreator>> getAllObjectsLists() {
+    public List getAllObjectsLists() {
         return objectManager.getAll();
     }
 
     /**
      * return object factory
-     * @return
+     * @return list of object's factories
      */
     @Override
-    public ArrayList<ObjectCreatorFab> getObjectFactory() {
+    public List getObjectFactory() {
         return factoryManager.getFactory();
     }
 
     /**
      *return arrayList of comparators
-     * @return
+     * @return list of comparators
      */
     @Override
-    public ArrayList<ArrayList<Comparator>> getComparatorFactory() {
+    public List getComparatorFactory() {
         return comparatorFactory.getComparatorArray();
     }
 
@@ -77,24 +81,29 @@ public class Controller implements IController {
      * @return added list
      */
     @Override
-    public ArrayList<ObjectCreator> addList() {
+    public List addList() {
         ArrayList<ObjectCreator> newList = objectManager.addList();
         return newList;
     }
 
     /**
-     * deletes objects with entered index in ArrayList with entered index from ArrayList<ArrayList<OjectCreator>>
-     * @param listIndex index of ArrayList
+     * deletes objects with entered index in ArrayList with entered index from ArrayList of ArrayList of ObjectCreator
+     * @param listIndex index of List
      * @param index index of object
-     * @throws IllegalAccessException
+     * @throws  ControllerException
      */
     @Override
-    public void DeleteObject(int listIndex, int index) throws IllegalAccessException {
-        objectManager.deleteElement(listIndex, index);
+    public void deleteObject(int listIndex, int index) throws ControllerException {
+        try {
+            objectManager.deleteElement(listIndex, index);
+        }
+        catch (ServiseException e) {
+            throw new ControllerException("Error while deleting object! Please try again");
+        }
     }
 
     /**
-     * return object with entered index in ArrayList with entered index from ArrayList<ArrayList<OjectCreator>>
+     * return object with entered index in ArrayList with entered index from ArrayList of ArrayList of OjectCreator
      * @param listIndex index of ArrayList
      * @param objIndex index of object
      * @return object ObjectCreator
@@ -109,10 +118,9 @@ public class Controller implements IController {
      * @param listIndex index of ArrayList
      * @param strToFind string to compare with object
      * @return index of founded object, if such object does not exists returns -1
-     * @throws IllegalAccessException
      */
     @Override
-    public int search(int listIndex, String strToFind) throws IllegalAccessException {
+    public int search(int listIndex, String strToFind)  {
         return objectManager.search(listIndex, strToFind);
     }
 
@@ -123,7 +131,7 @@ public class Controller implements IController {
     }
 
     @Override
-    public ArrayList<ObjectCreator> GetSortedListOFCurrObjects(int listIndex, int comparatorIndex) {
+    public List getSortedListOFCurrObjects(int listIndex, int comparatorIndex) {
         Comparator comparator = comparatorFactory.getNeededComparator(listIndex, comparatorIndex);
         return objectManager.getSortedList(listIndex, comparator);
     }
@@ -131,26 +139,30 @@ public class Controller implements IController {
     /**
      * reads data from  sourse and sets it in objectManager
      * @param sourceName name of sourse
+     *@throws  ControllerException
      */
     @Override
-    public void ReadFromSource(String sourceName) {
+    public void readFromSource(String sourceName) throws ControllerException {
         ArrayList<ArrayList<ObjectCreator>> readedList = null;
         try {
-            readedList = fileManager.readFromFile(sourceName);
+            readedList = ( ArrayList<ArrayList<ObjectCreator>> ) fileManager.readFromFile(sourceName);
             objectManager.set(readedList);
         } catch (ServiseException ex) {
+throw new ControllerException("Error while reading data from sourse! Try again please");
         }
     }
 
     /**
      * writes data to sourse
      * @param sourceName name of sourse
+     *@throws  ControllerException
      */
     @Override
-    public void WriteToSource(String sourceName) {
+    public void writeToSource(String sourceName) throws ControllerException {
         try {
             fileManager.saveToFile(objectManager.getAll(), sourceName);
         } catch (ServiseException ex) {
+            throw new ControllerException("Error while writing data to sourse! Try again please");
         }
     }
 }

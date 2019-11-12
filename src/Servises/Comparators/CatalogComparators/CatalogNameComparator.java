@@ -1,10 +1,12 @@
-package Servises.Comparators.CatalogComparators;
+package servises.comparators.catalogComparators;
 
-import Beans.BonusCard;
-import Beans.Catalog;
+import beans.Catalog;
 
 import java.util.Comparator;
 
+/**
+ * compares 2 objects of Catalog by name
+ */
 public class CatalogNameComparator implements Comparator<Catalog> {
     @Override
     public String toString() {

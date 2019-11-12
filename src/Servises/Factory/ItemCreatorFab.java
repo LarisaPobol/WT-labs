@@ -1,11 +1,14 @@
-package Servises.Factory;
+package servises.factory;
 
-import Beans.Item;
-import Beans.ObjectCreator;
+import beans.Item;
+import beans.ObjectCreator;
 
+/**
+ * factory for Item
+ */
 public class ItemCreatorFab extends ObjectCreatorFab{
     @Override
-    public ObjectCreator Create() {
+    public ObjectCreator create() {
         return new Item();
     }
 

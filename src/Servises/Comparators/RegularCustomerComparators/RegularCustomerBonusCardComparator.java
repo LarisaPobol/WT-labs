@@ -1,10 +1,13 @@
-package Servises.Comparators.RegularCustomerComparators;
+package servises.comparators.regularCustomerComparators;
 
 
-import Beans.RegularCustomer;
+import beans.RegularCustomer;
 
 import java.util.Comparator;
 
+/**
+ * compares 2 objects of RegularCustomer by bonus card numbers
+ */
 public class RegularCustomerBonusCardComparator  implements Comparator<RegularCustomer> {
     @Override
     public int compare(RegularCustomer regularCustomer, RegularCustomer t1) {

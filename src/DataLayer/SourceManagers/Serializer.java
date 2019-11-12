@@ -1,6 +1,6 @@
-package DataLayer.SourceManagers;
+package dataLayer.sourceManagers;
 
-import Beans.ObjectCreator;
+import beans.ObjectCreator;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -8,7 +8,11 @@ import java.beans.XMLEncoder;
 import java.io.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * class for serializing and deserializing data in XML format
+ */
 public class Serializer implements ISerializer {
     /**
      * serializes data to XML
@@ -17,18 +21,21 @@ public class Serializer implements ISerializer {
      * @throws DataLayerException
      */
     @Override
-    public void Serialize(ArrayList<ArrayList<ObjectCreator>> listToSerialize, String FileName) throws DataLayerException {
-      try {
-          File file = new File(FileName);
-          file.createNewFile();
-          XMLEncoder out = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(FileName)));
-          out.writeObject(listToSerialize);
-          out.flush();
-          out.close();
-        }
-catch (IOException e) {
-            e.printStackTrace();
+    public void serialize(List listToSerialize, String FileName) throws DataLayerException {
+        XMLEncoder out = null;
+        File file = new File(FileName);
+        try {
+            file.createNewFile();
+            out = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(FileName)));
+            out.writeObject(listToSerialize);
+
+        } catch (IOException e) {
             throw new DataLayerException(e);
+        } finally {
+            if (out != null) {
+                out.flush();
+                out.close();
+            }
         }
     }
 
@@ -39,16 +46,18 @@ catch (IOException e) {
      * @throws DataLayerException
      */
     @Override
-    public ArrayList<ArrayList<ObjectCreator>> Deserialize(String fileName) throws DataLayerException {
-       try {
-           XMLDecoder in = new XMLDecoder(new BufferedInputStream(new FileInputStream(fileName)));
-           ArrayList<ArrayList<ObjectCreator>> data = (ArrayList<ArrayList<ObjectCreator>>)in.readObject();
-           in.close();
-           return data;
-        }
-        catch (IOException e) {
+    public List deserialize(String fileName) throws DataLayerException {
+        XMLDecoder in = null;
+        try {
+            in = new XMLDecoder(new BufferedInputStream(new FileInputStream(fileName)));
+            ArrayList<ArrayList<ObjectCreator>> data = (ArrayList<ArrayList<ObjectCreator>>) in.readObject();
+            return data;
+        } catch (IOException e) {
             throw new DataLayerException(e);
+        } finally {
+            if (in != null) {
+                in.close();
+            }
         }
-        //return null;
     }
 }

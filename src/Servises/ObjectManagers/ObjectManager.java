@@ -1,6 +1,7 @@
-package Servises.ObjectManagers;
+package servises.objectManagers;
 
-import Beans.*;
+import beans.*;
+import servises.ServiseException;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -29,23 +30,28 @@ public class ObjectManager implements IObjectManager, Serializable {
     }
 
     @Override
-    public void deleteElement(int listIndex, int index) throws IllegalAccessException {
+    public void deleteElement(int listIndex, int index) throws ServiseException {
         ObjectCreator objForDel = listObjects.get(listIndex).get(index);
-        for (ArrayList<ObjectCreator> list : listObjects
-        ) {
-            Iterator<ObjectCreator> it = list.iterator();
-            while (it.hasNext()) {
-                ObjectCreator objectInList = it.next();
-               // delete(objectInList, objForDel, it);
-                delete(objForDel, objectInList, it);
+        try {
+            for (ArrayList<ObjectCreator> list : listObjects
+            ) {
+                Iterator<ObjectCreator> it = list.iterator();
+                while (it.hasNext()) {
+                    ObjectCreator objectInList = it.next();
+                    delete(objForDel, objectInList, it);
+                }
             }
+            listObjects.get(listIndex).remove(objForDel);
         }
-        listObjects.get(listIndex).remove(objForDel);
+        catch(Exception e) {
+            throw new ServiseException("unable to delete object! Please, try again");
+        }
     }
 
-    private void delete(ObjectCreator objectInList, ObjectCreator objForDel, Iterator it) throws IllegalAccessException {
+    private void delete(ObjectCreator objectInList, ObjectCreator objForDel, Iterator it) throws ServiseException {
         Field[] objForDelFields = objForDel.getClass().getDeclaredFields();
         Class class1 = objectInList.getClass();
+        try {
         int fieldIndex = -1;
         int i = 0;
         boolean containField = false;
@@ -61,6 +67,10 @@ public class ObjectManager implements IObjectManager, Serializable {
             if (objForDelFields[fieldIndex].get(objForDel) == objectInList) {
                 it.remove();
             }
+        }
+        }
+        catch (IllegalAccessException e) {
+            throw new ServiseException("unable to delete object! Please, try again");
         }
     }
 
@@ -102,7 +112,7 @@ public class ObjectManager implements IObjectManager, Serializable {
     }
 
     @Override
-    public int search(int listIndex, String strToFind) throws IllegalAccessException {
+    public int search(int listIndex, String strToFind){
         for (ObjectCreator b :listObjects.get(listIndex)) {
             if (b.toString().equals(strToFind)) return listObjects.get(listIndex).indexOf(b);
         }

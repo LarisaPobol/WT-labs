@@ -1,8 +1,11 @@
-package Servises.Comparators.ItemComparators;
+package servises.comparators.itemComparators;
 
-import Beans.Item;
+import beans.Item;
 import java.util.Comparator;
 
+/**
+ * compares 2 objects of Item by id
+ */
 public class ItemIdComparator implements Comparator<Item> {
     @Override
     public int compare(Item item, Item t1) {

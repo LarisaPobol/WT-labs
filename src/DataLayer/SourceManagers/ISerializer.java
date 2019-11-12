@@ -1,11 +1,15 @@
-package DataLayer.SourceManagers;
+package dataLayer.sourceManagers;
 
-import Beans.ObjectCreator;
+import beans.ObjectCreator;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * interface for data layer
+ */
 public interface ISerializer {
-    void Serialize( ArrayList<ArrayList<ObjectCreator>> listToSerialize, String FileName) throws IOException, DataLayerException;
-    ArrayList<ArrayList<ObjectCreator>> Deserialize(String fileName) throws DataLayerException;
+    void serialize(List listToSerialize, String FileName) throws IOException, DataLayerException;
+    List deserialize(String fileName) throws DataLayerException;
 }

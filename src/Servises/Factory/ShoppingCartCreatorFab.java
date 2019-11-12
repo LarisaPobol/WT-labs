@@ -1,11 +1,14 @@
-package Servises.Factory;
+package servises.factory;
 
-import Beans.ObjectCreator;
-import Beans.ShoppingCart;
+import beans.ObjectCreator;
+import beans.ShoppingCart;
 
+/**
+ * factory for ShoppingCart
+ */
 public class ShoppingCartCreatorFab extends ObjectCreatorFab{
     @Override
-    public ObjectCreator Create() {
+    public ObjectCreator create() {
         return new ShoppingCart();
     }
 

@@ -1,4 +1,4 @@
-package Servises;
+package servises;
 
 public class ServiseException extends Exception {
     public ServiseException() {

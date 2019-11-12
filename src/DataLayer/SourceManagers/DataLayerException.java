@@ -1,5 +1,8 @@
-package DataLayer.SourceManagers;
+package dataLayer.sourceManagers;
 
+/**
+ * data layer exception
+ */
 public class DataLayerException extends Exception {
    // private static final long serialVersionUID = 1L;
 

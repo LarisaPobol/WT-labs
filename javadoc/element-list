@@ -1,0 +1,15 @@
+beans
+controllers
+dataLayer.sourceManagers
+servises
+servises.comparators
+servises.comparators.bonusCardComparators
+servises.comparators.catalogComparators
+servises.comparators.customerComparators
+servises.comparators.itemComparators
+servises.comparators.regularCustomerComparators
+servises.comparators.shoppingCartComparators
+servises.factory
+servises.objectManagers
+viewLayer
+viewLayer.controllers

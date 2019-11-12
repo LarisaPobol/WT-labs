@@ -1,4 +1,4 @@
-package ViewLayer;
+package viewLayer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

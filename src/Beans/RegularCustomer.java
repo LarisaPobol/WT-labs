@@ -1,8 +1,11 @@
-package Beans;
+package beans;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * java bean for regular cutomer, extends class Customer, contains field for ink to bonus card
+ */
 public class RegularCustomer extends Customer implements Serializable {
     private BonusCard bonusCard;
 

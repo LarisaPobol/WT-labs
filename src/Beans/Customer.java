@@ -1,8 +1,11 @@
-package Beans;
+package beans;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * java bean for customer, contains fields for customer's personal data(name, surname, phone number, email)
+ */
 public class Customer extends ObjectCreator implements Serializable{
     private String name;
     private String surname;

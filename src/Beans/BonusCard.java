@@ -1,16 +1,15 @@
-package Beans;
+package beans;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * java bean for bonus card, contains fields for bonus card number and personal discount
+ */
 public class BonusCard extends ObjectCreator implements Serializable  {
     private String bonusCardNumber;
     private Float personalDiscount;
 
     public BonusCard() {
-    }
-
-    public ObjectCreator Create() {
-        return new BonusCard();
     }
 
     @Override

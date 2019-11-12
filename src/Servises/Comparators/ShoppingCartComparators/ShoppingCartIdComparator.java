@@ -1,9 +1,12 @@
-package Servises.Comparators.ShoppingCartComparators;
+package servises.comparators.shoppingCartComparators;
 
-import Beans.ShoppingCart;
+import beans.ShoppingCart;
 
 import java.util.Comparator;
 
+/**
+ * compares 2 objects of ShoppingCart by cart's id
+ */
 public class ShoppingCartIdComparator implements Comparator<ShoppingCart> {
     @Override
     public int compare(ShoppingCart shoppingCart, ShoppingCart t1) {

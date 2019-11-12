@@ -1,11 +1,14 @@
-package Servises.Factory;
+package servises.factory;
 
-import Beans.BonusCard;
-import Beans.ObjectCreator;
+import beans.BonusCard;
+import beans.ObjectCreator;
 
+/**
+ * factory for BonusCard
+ */
 public class BonusCardCreatorFab extends ObjectCreatorFab{
     @Override
-    public ObjectCreator Create() {
+    public ObjectCreator create() {
         return new BonusCard();
     }
 

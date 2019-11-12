@@ -1,10 +1,11 @@
-package Beans;
+package beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+/**
+ * java bean shopping cart, contains fields for id and client id.
+ */
 public class ShoppingCart extends ObjectCreator implements Serializable {
     private Integer Id;
     private Integer clientId;

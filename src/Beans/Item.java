@@ -1,8 +1,11 @@
-package Beans;
+package beans;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * java bean for item in catalog, contains fields for item id, price, amount, name and link to catalog
+ */
 public class Item  extends ObjectCreator implements Serializable {
     private Integer id;
     private Float price;

@@ -1,18 +1,20 @@
-package ViewLayer.Controllers;
+package viewLayer.controllers;
 
-import Beans.*;
-import Servises.Factory.ObjectCreatorFab;
+import beans.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+/**
+ * class that deals with controllers in view layer
+ */
 public class ControlsManager {
 
     private ArrayList<Class> classArray;
@@ -32,7 +34,7 @@ public class ControlsManager {
      * @param toggleGroup toggleGroup for radiobuttons
      * @return
      */
-    public RadioButton[]  createRadioGroup (ArrayList array, ToggleGroup toggleGroup) {
+    public RadioButton[]  createRadioGroup (List array, ToggleGroup toggleGroup) {
         RadioButton[] radioArray = new RadioButton[array.size()];
         int i = 0;
         for (var item : array
@@ -42,7 +44,6 @@ public class ControlsManager {
             newRadioButton.setToggleGroup(toggleGroup);
             radioArray[i] = newRadioButton;
             i++;
-           // vBoxRadioGroupClassNames.getChildren().add(newRadioButton);
         }
         return  radioArray;
     }
@@ -68,22 +69,25 @@ public class ControlsManager {
         int classIndex = classArray.lastIndexOf(objFields[k].getType());
         if (classIndex == -1) {
             Object objFieldValue = ((TextInputControl) (controls.get(i))).getText();
-            switch (objFields[k].getType().getTypeName()) {
+            Object clazz = objFields[k].getType();
+            Object o1 =  clazz  instanceof  Integer;
+
+           switch (objFields[k].getType().getTypeName()) {
                 case "java.lang.Integer": {
                     Integer intVal = Integer.parseInt(objFieldValue.toString());
                     try {
                         objFields[k].set(obj, intVal);
                     } catch (NumberFormatException ex) {
-                        objFields[k].set(obj, null);
+                        objFields[k].set(obj,0);
                     }
                     break;
                 }
                 case "java.lang.Float": {
-                    Float floatVal = Float.parseFloat(objFieldValue.toString());
                     try {
+                        Float floatVal = Float.parseFloat(objFieldValue.toString());
                         objFields[k].set(obj, floatVal);
                     } catch (NumberFormatException ex) {
-                        objFields[k].set(obj, null);
+                        objFields[k].set(obj, 0.0);
                     }
                     break;
                 }
@@ -175,47 +179,14 @@ public class ControlsManager {
         clearControls(vBoxobjectFields);
         Class objClass = obj.getClass();
         createControls(objClass, obj, allObjects);
-
         Class superClass = obj.getClass().getSuperclass();
         createControls(superClass, obj, allObjects);
-
         vBoxobjectFields.getChildren().addAll(controls);
-        /*Field[] objFields = objClass.getDeclaredFields();
-        int k = 0;
-        for (Field field : objFields
-        ) {
-            objFields[k].setAccessible(true);
-            int classIndex = classArray.lastIndexOf(field.getType());
-            if (classIndex == -1) {
-                Label newLabel = new Label(field.getName());
-                controls.add(newLabel);
-                TextField newTextField = new TextField();
-                controls.add(newTextField);
-                if (objFields[k].get(obj) != null) {
-                    newTextField.setText(objFields[k].get(obj).toString());
-                }
-            } else {
-                Type type = field.getType();
-                Label newLabel = new Label(field.getName());
-                controls.add(newLabel);
-                ChoiceBox newChoiseBox = new ChoiceBox();
-                ObservableList<ObjectCreator> list = FXCollections.observableArrayList();
-                list.addAll(allObjects.get(classIndex));
-                newChoiseBox.setItems(list);
-                int objIndex = allObjects.get(classIndex).indexOf(objFields[k].get(obj));
-                if (objIndex != -1) {
-                    newChoiseBox.setValue(allObjects.get(classIndex).get(objIndex));
-                }
-                controls.add(newChoiseBox);
-            }
-            k++;
-        }
-        vBoxobjectFields.getChildren().addAll(controls);*/
     }
 
     /**
      * deletes all controls
-     * @param vBoxobjectFields
+     * @param vBoxobjectFields vBox to clear
      */
     public void clearControls(VBox vBoxobjectFields) {
         vBoxobjectFields.getChildren().removeAll(controls);

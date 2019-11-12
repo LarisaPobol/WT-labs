@@ -1,9 +1,12 @@
-package Servises.Comparators.BonusCardComparators;
+package servises.comparators.bonusCardComparators;
 
-import Beans.BonusCard;
+import beans.BonusCard;
 
 import java.util.Comparator;
 
+/**
+ * compares 2 objects of BonusCard by Personal discount
+ */
 public class BonusCardPersonalDiscountComparator  implements Comparator<BonusCard> {
     @Override
     public int compare(BonusCard bonusCard, BonusCard t1) {

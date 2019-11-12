@@ -1,6 +1,6 @@
-package Servises.Comparators;
+package servises.comparators.itemComparators;
 
-import Beans.Item;
+import beans.Item;
 import java.util.Comparator;
 
 public class ItemComparator  implements Comparator<Item> {

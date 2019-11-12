@@ -1,9 +1,12 @@
-package Servises.Comparators.CatalogComparators;
+package servises.comparators.catalogComparators;
 
-import Beans.Catalog;
+import beans.Catalog;
 
 import java.util.Comparator;
 
+/**
+ * compares 2 objects of Catalog by parent catalog
+ */
 public class CatalogParentCatalogComparator implements Comparator<Catalog> {
 
     @Override

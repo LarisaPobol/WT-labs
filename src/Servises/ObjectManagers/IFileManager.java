@@ -1,11 +1,12 @@
-package Servises.ObjectManagers;
+package servises.objectManagers;
 
-import Beans.ObjectCreator;
-import Servises.ServiseException;
+import beans.ObjectCreator;
+import servises.ServiseException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IFileManager {
-    void saveToFile(ArrayList<ArrayList<ObjectCreator>> listToSave, String fileName) throws ServiseException;
-    ArrayList<ArrayList<ObjectCreator>> readFromFile(String fileName) throws ServiseException;
+    void saveToFile(List listToSave, String fileName) throws ServiseException;
+    List readFromFile(String fileName) throws ServiseException;
 }

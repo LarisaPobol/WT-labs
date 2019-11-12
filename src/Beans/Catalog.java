@@ -1,9 +1,10 @@
-package Beans;
+package beans;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+/**
+ * java bean for catalog, contains fields for catalog's name and link to parent catalog
+ */
 public class Catalog extends ObjectCreator  implements Serializable {
     private String Name;
     private Catalog parentCatalog;

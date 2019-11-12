@@ -1,8 +1,9 @@
-package ViewLayer.Controllers;
+package viewLayer.controllers;
 
-import Beans.ObjectCreator;
-import Controllers.Controller;
-import Servises.Factory.ObjectCreatorFab;
+import beans.ObjectCreator;
+import controllers.Controller;
+import controllers.ControllerException;
+import servises.factory.ObjectCreatorFab;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,7 +16,9 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
+/**
+ * view layer controller
+ */
 public class MainWindowController {
     @FXML
     private VBox vBoxRadioGroupClassNames;
@@ -41,8 +44,9 @@ public class MainWindowController {
         if (radioGroup.getSelectedToggle() != null) {
             int indexSelected = radioGroup.getToggles().indexOf(radioGroup.getSelectedToggle());
             var factory = controller.getObjectFactory();
-            ObjectCreator newObj = factory.get(indexSelected).Create();
-            ArrayList<ArrayList<ObjectCreator>> allObjectsLists = controller.getAllObjectsLists();
+            ObjectCreatorFab fact= (ObjectCreatorFab) factory.get(indexSelected);
+            ObjectCreator newObj = fact.create();
+            ArrayList<ArrayList<ObjectCreator>> allObjectsLists = (ArrayList<ArrayList<ObjectCreator>> )controller.getAllObjectsLists();
             try {
                 controlsManager.setDataInControls(vBoxObjectFields, newObj, allObjectsLists);
             } catch (IllegalAccessException e) {
@@ -71,7 +75,7 @@ public class MainWindowController {
      * @param header
      * @param content
      */
-    public void showAlert(String title, String header, String content) {
+    private void showAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(header);
@@ -82,13 +86,13 @@ public class MainWindowController {
     /**
      * creates tabs with listwiews that contain lists of objects
      */
-    public void createTabs() {
+    private void createTabs() {
         objectsLists = new ArrayList<ListView<ObjectCreator>>();
-        for (ObjectCreatorFab item : controller.getObjectFactory()
+        for (ObjectCreatorFab item : (ArrayList<ObjectCreatorFab>) controller.getObjectFactory()
         ) {
             Tab tab = new Tab();
             tab.setText(item.toString());
-            ArrayList<ObjectCreator> newList = controller.addList();
+            ArrayList<ObjectCreator> newList = (ArrayList<ObjectCreator> ) controller.addList();
             ListView<ObjectCreator> newListView = new ListView();
             objectsLists.add(newListView);
             tab.setContent(newListView);
@@ -100,7 +104,7 @@ public class MainWindowController {
                                 int index = objectsLists.get(listIndex).getSelectionModel().getSelectedIndex();
                                 if (index != -1) {
                                     ObjectCreator obj = controller.getObjectByIndexes(listIndex, index);
-                                    ArrayList<ArrayList<ObjectCreator>> allObjectsLists = controller.getAllObjectsLists();
+                                    ArrayList<ArrayList<ObjectCreator>> allObjectsLists = (ArrayList<ArrayList<ObjectCreator>> )controller.getAllObjectsLists();
                                     controlsManager.setDataInControls(vBoxObjectFields, obj, allObjectsLists);
                                 }
                             }
@@ -125,9 +129,9 @@ public class MainWindowController {
     /**
      * fills choiceBox with coparators according to selected class
      */
-    public void fillComparators() {
+    private void fillComparators() {
         int index = tabPaneObjects.getSelectionModel().getSelectedIndex();
-        ArrayList<Comparator> comparators = controller.getComparatorFactory().get(index);
+        ArrayList<Comparator> comparators = (ArrayList<Comparator>) controller.getComparatorFactory().get(index);
         ObservableList<Comparator> list = FXCollections.observableArrayList(comparators);
         choiceBoxFilter.setItems(list);
     }
@@ -135,7 +139,7 @@ public class MainWindowController {
     /**
      * update listwiev in selected tab
      */
-    public void updateTab() {
+    private void updateTab() {
         int index = tabPaneObjects.getSelectionModel().getSelectedIndex();
         ObservableList<ObjectCreator> list = FXCollections.observableArrayList(controller.getCurrObjectsListByIndex(index));
         objectsLists.get(index).setItems(list);
@@ -150,7 +154,7 @@ public class MainWindowController {
         int listIndex = tabPaneObjects.getSelectionModel().getSelectedIndex();
         int comparatorIndex = choiceBoxFilter.getSelectionModel().getSelectedIndex();
         if (comparatorIndex != -1) {
-            ArrayList<ObjectCreator> sortedList = controller.GetSortedListOFCurrObjects(listIndex, comparatorIndex);
+            ArrayList<ObjectCreator> sortedList = (ArrayList<ObjectCreator>)controller.getSortedListOFCurrObjects(listIndex, comparatorIndex);
             int index = tabPaneObjects.getSelectionModel().getSelectedIndex();
             ObservableList<ObjectCreator> list = FXCollections.observableArrayList(sortedList);
             objectsLists.get(index).setItems(list);
@@ -172,8 +176,9 @@ public class MainWindowController {
         int indexSelected = radioGroup.getToggles().indexOf(radioGroup.getSelectedToggle());
         var factory = controller.getObjectFactory();
         if (indexSelected != -1) {
-            ObjectCreator newObj = factory.get(indexSelected).Create();
-            ArrayList<ArrayList<ObjectCreator>> allObjectsLists = controller.getAllObjectsLists();
+            ObjectCreatorFab fact = (ObjectCreatorFab) factory.get(indexSelected);
+            ObjectCreator newObj = fact.create();
+            ArrayList<ArrayList<ObjectCreator>> allObjectsLists = (ArrayList<ArrayList<ObjectCreator>>) controller.getAllObjectsLists();
             ObjectCreator newObj1 = controlsManager.getDataFromControls(newObj, allObjectsLists);
             controller.AddObject(indexSelected, newObj1);
             updateTab();
@@ -198,7 +203,7 @@ public class MainWindowController {
         int index = objectsLists.get(listIndex).getSelectionModel().getSelectedIndex();
         if ((listIndex != -1) && (index != -1)) {
             ObjectCreator edtObj = controller.getObjectByIndexes(listIndex, index);
-            ArrayList<ArrayList<ObjectCreator>> allObjectsLists = controller.getAllObjectsLists();
+            ArrayList<ArrayList<ObjectCreator>> allObjectsLists = (ArrayList<ArrayList<ObjectCreator>> ) controller.getAllObjectsLists();
             ObjectCreator newObj1 = controlsManager.getDataFromControls(edtObj, allObjectsLists);
             updateTab();
             controlsManager.clearControls(vBoxObjectFields);
@@ -217,12 +222,17 @@ public class MainWindowController {
     private void clickDelete(ActionEvent event) throws IllegalAccessException {
         int listIndex = tabPaneObjects.getSelectionModel().getSelectedIndex();
         int objIndex = objectsLists.get(listIndex).getSelectionModel().getSelectedIndex();
-        if ((listIndex != -1) && (objIndex != -1)) {
-            controller.DeleteObject(listIndex, objIndex);
-            updateTab();
-            controlsManager.clearControls(vBoxObjectFields);
-        } else {
-            showAlert("Warning", "no object selected", "choose object and try again");
+        try {
+            if ((listIndex != -1) && (objIndex != -1)) {
+                controller.deleteObject(listIndex, objIndex);
+                updateTab();
+                controlsManager.clearControls(vBoxObjectFields);
+            } else {
+                showAlert("Warning", "no object selected", "choose object and try again");
+            }
+        }
+        catch (ControllerException e) {
+            showAlert("Error!", "can't delete object", e.getMessage());
         }
     }
 
@@ -233,15 +243,21 @@ public class MainWindowController {
      */
     @FXML
     private void OpenFile(ActionEvent event) {
-        controller.ReadFromSource("file.xml");
-        int i = 0;
-        for (ArrayList<ObjectCreator> listItem : controller.getAllObjectsLists()
-        ) {
-            ObservableList<ObjectCreator> list = FXCollections.observableArrayList(listItem);
-            objectsLists.get(i).setItems(list);
-            i++;
+        try {
+            controller.readFromSource("file.xml");
+            int i = 0;
+            for (ArrayList<ObjectCreator> listItem : (ArrayList<ArrayList<ObjectCreator>>) controller.getAllObjectsLists()
+            ) {
+                ObservableList<ObjectCreator> list = FXCollections.observableArrayList(listItem);
+                objectsLists.get(i).setItems(list);
+                i++;
+            }
+            updateTab();
+        } catch (ControllerException e) {
+            showAlert("Data error", "can't open file", e.getMessage());
         }
-        updateTab();
+
+
     }
 
     /**
@@ -250,7 +266,12 @@ public class MainWindowController {
      */
     @FXML
     private void SaveToFile(ActionEvent event) {
-        controller.WriteToSource("file.xml");
+        try {
+            controller.writeToSource("file.xml");
+        }
+        catch (ControllerException e) {
+            showAlert("Data error", "can't save data  in file", e.getMessage());
+        }
     }
 
     /**
@@ -265,7 +286,7 @@ public class MainWindowController {
         int indexFounded = controller.search(indexSelected, strToFind);
         if (indexFounded != -1) {
             ObjectCreator obj = controller.getObjectByIndexes(indexSelected, indexFounded);
-            ArrayList<ArrayList<ObjectCreator>> allObjectsLists = controller.getAllObjectsLists();
+            ArrayList<ArrayList<ObjectCreator>> allObjectsLists = (ArrayList<ArrayList<ObjectCreator>> )controller.getAllObjectsLists();
             int listIndex = controller.getListIndexByObject(obj);
             controlsManager.setDataInControls(vBoxObjectFields, obj, allObjectsLists);
             tabPaneObjects.getSelectionModel().select(listIndex);

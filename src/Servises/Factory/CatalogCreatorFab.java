@@ -1,11 +1,14 @@
-package Servises.Factory;
+package servises.factory;
 
-import Beans.Catalog;
-import Beans.ObjectCreator;
+import beans.Catalog;
+import beans.ObjectCreator;
 
+/**
+ * factory for Catalog
+ */
 public class CatalogCreatorFab extends ObjectCreatorFab{
     @Override
-    public ObjectCreator Create() {
+    public ObjectCreator create() {
         return new Catalog();
     }
 

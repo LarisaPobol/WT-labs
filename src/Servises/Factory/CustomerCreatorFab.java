@@ -1,11 +1,14 @@
-package Servises.Factory;
+package servises.factory;
 
-import Beans.Customer;
-import Beans.ObjectCreator;
+import beans.Customer;
+import beans.ObjectCreator;
 
+/**
+ * factory for Customer
+ */
 public class CustomerCreatorFab extends ObjectCreatorFab{
     @Override
-    public ObjectCreator Create() {
+    public ObjectCreator create() {
         return new Customer();
     }
 

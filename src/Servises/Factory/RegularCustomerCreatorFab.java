@@ -1,11 +1,14 @@
-package Servises.Factory;
+package servises.factory;
 
-import Beans.ObjectCreator;
-import Beans.RegularCustomer;
+import beans.ObjectCreator;
+import beans.RegularCustomer;
 
+/**
+ * factory for RegularCustomer
+ */
 public class RegularCustomerCreatorFab extends ObjectCreatorFab{
     @Override
-    public ObjectCreator Create() {
+    public ObjectCreator create() {
         return new RegularCustomer();
     }
 

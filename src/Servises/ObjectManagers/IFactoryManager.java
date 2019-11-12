@@ -1,6 +1,6 @@
-package Servises.ObjectManagers;
+package servises.objectManagers;
 
-import Servises.Factory.ObjectCreatorFab;
+import servises.factory.ObjectCreatorFab;
 
 import java.util.ArrayList;
 
